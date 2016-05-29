@@ -1,21 +1,63 @@
 from objects.person import Person
-from random import randint
+from random import randint, choice
+from copy import copy
+import csv
+
+from schemes.disposable_email import DisposableEmail
+from schemes.shared_property import SharedProperty
 
 class Main:
-    def run(self):        
+    def setup(self):
         # Generate a list of persons
-        persons = []
-        for x in xrange(100):
-            persons.append(Person())
+        self.persons = []
+        for x in xrange(25):
+            self.persons.append(Person())
             
-        # Get the next one from the list
-        person = persons.pop(0)
+        # Make a backup of original persons so we can emulate change
+        # reversal later.
+        self.original_persons = copy(self.persons)
         
-        # Industry research suggests 1% of all transactions are fraudulent.
-        # For the sake of being able to find some needles in this haystack, 
-        # let's bump that up to 10%.
-        if randint(0,100) <= 10:
-            pass
+        self.schemes = [
+            DisposableEmail(),
+            SharedProperty(),
+        ]
+    
+    def run(self):
+        print "Generating persons..."        
+        self.setup()
         
+        fieldnames = [x for x in self.persons[0].__dict__.keys() if x not in ["mappings", "generators", "faker"]]
+        
+        output_file = open('./resources/output.csv','wb')
+        csvwriter = csv.DictWriter(output_file, delimiter=',', fieldnames=fieldnames, extrasaction='ignore')
+        csvwriter.writeheader()
+        
+        transactions = 0
+        while transactions < 10000:
+            # Get the next one from the list
+            person = self.persons.pop(0)
+            
+            # Industry research suggests 1% of all transactions are fraudulent.
+            # If we roll greater than 2/100, emulate normal user behavior.
+            if randint(0,100) > 0:
+                # Let's assume users only make changes 25% of the time.
+                if randint(0,100) < 25:
+                    print person.change_random()
+                else:
+                    print person.change_nothing()
+                    
+            else:
+                # We rolled less than 10/100.
+                # Let's commit some fraud.
+                scheme = choice(self.schemes)
+                results = scheme.commit(person)
+                for result in results:
+                    print "FRAUD (" + scheme.name + "): " + result 
+            
+            # Put the person back in line
+            person.generate_last_modified()
+            csvwriter.writerow(person.__dict__)
+            self.persons.append(person)
+            transactions += 1
         
 Main().run()
