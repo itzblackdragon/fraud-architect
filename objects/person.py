@@ -54,6 +54,9 @@ class Person:
     def __init__(self):
         self.faker = Faker()
         
+        # TODO: IP addresses should geolocate to areas near the person in question,
+        # or at least to the same country. 
+        
         self.generators = {
             "gender": self.generate_gender,
             "first_name": self.generate_first_name,

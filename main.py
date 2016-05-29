@@ -38,7 +38,7 @@ class Main:
             person = self.persons.pop(0)
             
             # Industry research suggests 1% of all transactions are fraudulent.
-            # If we roll greater than 2/100, emulate normal user behavior.
+            # If we roll greater than 1/100, emulate normal user behavior.
             if randint(0,100) > 0:
                 # Let's assume users only make changes 25% of the time.
                 if randint(0,100) < 25:
@@ -54,9 +54,14 @@ class Main:
                 for result in results:
                     print "FRAUD (" + scheme.name + "): " + result 
             
-            # Put the person back in line
+            # Update the timestamp
+            # TODO: Does not update fast enough; results in a lot of duplicate TS
             person.generate_last_modified()
+            
+            # Write this transaction to file
             csvwriter.writerow(person.__dict__)
+            
+            # Put the person back in line
             self.persons.append(person)
             transactions += 1
         
