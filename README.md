@@ -32,7 +32,7 @@ And then again later, perhaps after the application for credit is denied because
 
 * Neil Gregson, M, 596-36-XXXX
 
-Criminals abide by no zeitgeist and will in fact take advantage of it where possible. Is this a case of gender dysphoria or identity theft? We cannot make such a determination without further investigation; androgynous names and gender bending have been used before in an effort to generate synthetic identities. But FRAUD ARCHITECT will generate plenty of these sorts of cases for you to consider.
+Criminals are well-attuned to the zeitgeist and will in fact take advantage of it where possible. Is this a case of gender dysphoria or identity theft? We cannot make such a determination without further investigation; androgynous names and gender bending have been used before in an effort to generate synthetic identities. But FRAUD ARCHITECT will generate plenty of these sorts of cases for you to consider.
 
 FRAUD ARCHITECT randomly generates stateful events modeled after random, anomalous and fraudulent user behavior over a period of time. This makes it ideal for testing fraud detection/auditing appliances, tuning machine learning algorithms, or just generating a ton of structured data for you to test your Logstash implementation with.
 
