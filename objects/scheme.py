@@ -16,3 +16,9 @@ class Scheme:
         end = randint(start, len(history))
         
         return history[start:end]
+    
+    def display_history(self, history):
+        fieldnames = [x for x in self.persons[0].__dict__.keys() if x not in ["mappings", "generators", "faker"]]
+        
+        for event in history:
+            print event.__dict__

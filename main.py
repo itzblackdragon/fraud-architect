@@ -5,6 +5,7 @@ import csv
 
 from schemes.disposable_email import DisposableEmail
 from schemes.shared_property import SharedProperty
+from schemes.probing import Probing
 
 class Main:
     def setup(self):
@@ -16,6 +17,7 @@ class Main:
         self.schemes = [
             DisposableEmail(),
             SharedProperty(),
+            Probing(),
         ]
     
     def run(self):
