@@ -12,10 +12,6 @@ class Main:
         self.persons = []
         for x in xrange(25):
             self.persons.append(Person())
-            
-        # Make a backup of original persons so we can emulate change
-        # reversal later.
-        self.original_persons = copy(self.persons)
         
         self.schemes = [
             DisposableEmail(),
@@ -37,20 +33,28 @@ class Main:
             # Get the next one from the list
             person = self.persons.pop(0)
             
-            # Industry research suggests 1% of all transactions are fraudulent.
-            # If we roll greater than 1/100, emulate normal user behavior.
-            if randint(0,100) > 0:
+            # Generate a random number of transactions for this person.
+            history = []
+            next_transaction = copy(person)
+            for x in xrange(randint(5,20)):
+                transaction = copy(next_transaction)
+                
                 # Let's assume users only make changes 25% of the time.
                 if randint(0,100) < 25:
-                    print person.change_random()
+                    print transaction.change_random()
                 else:
-                    print person.change_nothing()
-                    
-            else:
-                # We rolled less than 10/100.
+                    transaction.change_nothing()
+                
+                transaction.generate_last_modified()
+                history.append(transaction)
+                next_transaction = copy(transaction)
+                
+            # Industry research suggests 1% of all transactions are fraudulent.
+            if randint(0,100) < 5:
                 # Let's commit some fraud.
+                # Pick a scheme.
                 scheme = choice(self.schemes)
-                results = scheme.commit(person)
+                results = scheme.commit(person, history)
                 for result in results:
                     print "FRAUD (" + scheme.name + "): " + result 
             

@@ -21,7 +21,7 @@ class DisposableEmail(Scheme):
         blacklist = [line.rstrip() for line in file.readlines()]
         self.domains = blacklist
         
-    def commit(self, victim):
+    def commit(self, victim, history):
         # Get a random email address field from the person
         field = choice(victim.mappings["email"])
         
@@ -34,5 +34,8 @@ class DisposableEmail(Scheme):
         # Make the address
         fake_address = username + "@" + domain
         
-        # Set it
-        return [victim.change(field, fake_address)]
+        subset = self.subset_history(history)
+        for transaction in subset:
+            setattr(transaction, field, fake_address)
+        
+        return [field + " set for " + str(history[-1])]
