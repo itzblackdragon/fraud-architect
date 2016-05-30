@@ -21,8 +21,9 @@ class DisposableEmail(Scheme):
         blacklist = [line.rstrip() for line in file.readlines()]
         self.domains = blacklist
         
-    def commit(self, victim, history):
+    def commit(self, history):
         # Get a random email address field from the person
+        victim = history[0]
         field = choice(victim.mappings["email"])
         
         # Choose a disposable domain name

@@ -4,10 +4,10 @@ import hashlib
 from copy import copy
 from random import choice
 
-class Person:
+class Transaction:
     def __repr__(self):
-        # Return some identifier that this is a Person object
-        return "<Person: " + self.first_name + " " + self.last_name + ">"
+        # Return some identifier that this is a Transaction object
+        return "<Transaction: " + self.first_name + " " + self.last_name + ">"
     
     def __str__(self):
         return self.__repr__()
@@ -54,7 +54,7 @@ class Person:
     def __init__(self):
         self.faker = Faker()
         
-        # TODO: IP addresses should geolocate to areas near the person in question,
+        # TODO: IP addresses should geolocate to areas near the Transaction in question,
         # or at least to the same country. 
         
         self.generators = {
@@ -111,12 +111,12 @@ class Person:
                 setattr(self, field, self.generators[field]())
         else:
             setattr(self, field, value)
-        return "Changed: " + field + " for " + str(self)
+        return "Changed: " + field + " in " + str(self)
         
     def change_random(self):
         random_field = choice(self.generators.keys())
         self.change(random_field)
-        return "Changed: " + random_field + " for " + str(self)
+        return "Changed: " + random_field + " in " + str(self)
     
     def change_nothing(self):
-        return "Changed: nothing for " + str(self)
+        return "Changed: nothing in " + str(self)

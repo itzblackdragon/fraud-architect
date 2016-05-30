@@ -1,4 +1,4 @@
-from objects.person import Person
+from objects.transaction import Transaction
 from random import randint, choice
 from copy import copy
 import csv
@@ -12,7 +12,7 @@ class Main:
         # Generate a list of persons
         self.persons = []
         for x in xrange(25):
-            self.persons.append(Person())
+            self.persons.append(Transaction())
         
         self.schemes = [
             DisposableEmail(),
@@ -26,7 +26,7 @@ class Main:
         
         fieldnames = [x for x in self.persons[0].__dict__.keys() if x not in ["mappings", "generators", "faker"]]
         
-        output_file = open('./resources/output.csv','wb')
+        output_file = open('./output/consumer_data.csv','wb')
         csvwriter = csv.DictWriter(output_file, delimiter=',', fieldnames=fieldnames, extrasaction='ignore')
         csvwriter.writeheader()
         
@@ -56,7 +56,7 @@ class Main:
                 # Let's commit some fraud.
                 # Pick a scheme.
                 scheme = choice(self.schemes)
-                results = scheme.commit(person, history)
+                results = scheme.commit(history)
                 for result in results:
                     print "FRAUD (" + scheme.name + "): " + result 
             

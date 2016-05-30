@@ -16,11 +16,12 @@ class SharedProperty(Scheme):
             "ip_address": ["27.176.155.36", "73.154.116.207", "196.169.145.25"]
         }
     
-    def commit(self, victim, history):
+    def commit(self, history):
         # Choose whether we're going to use a fraudulent email or password
         field = choice(["password", "email"])
         
         # Choose an email field from the mappings
+        victim = history[0]
         email_field = choice(victim.mappings["email"])
         
         bad_password = choice(self.canned_values["password"])

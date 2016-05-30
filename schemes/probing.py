@@ -19,8 +19,9 @@ class Probing(Scheme):
     
     # TODO: Thoroughly test this module
     
-    def commit(self, victim, history):
+    def commit(self, history):
         # Choose a field to tamper with.
+        victim = history[0]
         field = choice(["first_name", "last_name", "address", "city", choice(victim.mappings["email"])])
         
         # A minor change is always made-- can be in a variety of forms

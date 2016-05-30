@@ -4,7 +4,7 @@ class Scheme:
     
     name = "Generic Scheme"
     
-    def commit(self, victim, history):
+    def commit(self, history):
         """
         This function must be overridden by child classes.
         """
